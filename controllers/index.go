@@ -5,9 +5,5 @@ import (
 )
 
 func ShowIndex(r render.Render) {
-	r.HTML(200, "index", struct {
-		Message string
-	}{
-		Message: "index",
-	})
+	r.HTML(200, "index", "")
 }
