@@ -8,9 +8,3 @@
   </div>
   <button type="submit" value="create" class="btn btn-default">Post</button>
 </form>
-<br />
-<ul>
-  {{range $key, $val := .posts}}
-  <li>{{$val.CreatedAt}} - {{$val.Body}}</li>
-  {{end}}
-</ul>
