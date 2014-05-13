@@ -1,8 +1,8 @@
 package models
 
 type Thread struct {
-	Id    int
-	Title string
+	Id    int    `db:"id"`
+	Title string `db:"title"`
 }
 
 func NewThread(title string) *Thread {
