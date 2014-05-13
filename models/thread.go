@@ -1,7 +1,7 @@
 package models
 
 type Thread struct {
-	Id    int `db:"pk"`
+	Id    int
 	Title string
 }
 
@@ -12,13 +12,12 @@ func NewThread(title string) *Thread {
 }
 
 func (db *DB) CreateThread(thread *Thread) error {
-	_, err := db.Insert(thread)
-	return err
+	return db.Insert(thread)
 }
 
-func (db *DB) GetAllThreads() ([]Thread, error) {
-	var threads []Thread
-	if err := db.Select(&threads); err != nil {
+func (db *DB) GetAllThreads() ([]*Thread, error) {
+	var threads []*Thread
+	if _, err := db.Select(&threads, "SELECT * FROM thread"); err != nil {
 		return nil, err
 	}
 	return threads, nil

@@ -1,18 +1,26 @@
 package models
 
 import (
-	"github.com/naoina/genmai"
+	"database/sql"
+	"github.com/coopernurse/gorp"
 )
 
 type DB struct {
-	*genmai.DB
+	*gorp.DbMap
 }
 
-func InitDB() (*DB, error) {
-	db, err := genmai.New(&genmai.SQLite3Dialect{}, "data/martini-sample.db")
+func InitDB(driver string, source string, dialect gorp.Dialect) (*DB, error) {
+	db, err := sql.Open("sqlite3", "data/martini-sample.db")
 	if err != nil {
 		return nil, err
 	}
-	db.CreateTableIfNotExists(&Thread{})
-	return &DB{db}, nil
+	dbmap := &gorp.DbMap{
+		Db:      db,
+		Dialect: dialect,
+	}
+	dbmap.AddTableWithName(Thread{}, "thread").SetKeys(true, "Id")
+	if err := dbmap.CreateTablesIfNotExists(); err != nil {
+		return nil, err
+	}
+	return &DB{dbmap}, nil
 }

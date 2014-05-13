@@ -13,7 +13,7 @@ func ShowThreads(r render.Render, db *models.DB) {
 	}
 
 	r.HTML(200, "thread/list", struct {
-		Threads []models.Thread
+		Threads []*models.Thread
 	}{
 		Threads: threads,
 	})
@@ -25,5 +25,6 @@ func CreateThread(req *http.Request, r render.Render, db *models.DB) {
 	if err := db.CreateThread(thread); err != nil {
 		panic(err)
 	}
+
 	r.Redirect("/thread/list", 302)
 }

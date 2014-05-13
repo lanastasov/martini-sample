@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/coopernurse/gorp"
 	"github.com/go-martini/martini"
 	"github.com/m0t0k1ch1/martini-sample/controllers"
 	"github.com/m0t0k1ch1/martini-sample/models"
@@ -14,7 +15,7 @@ func main() {
 		Layout: "layout",
 	}))
 
-	db, err := models.InitDB()
+	db, err := models.InitDB("sqlite3", "./data/martini-sample.db", gorp.SqliteDialect{})
 	if err != nil {
 		panic(err)
 	}
