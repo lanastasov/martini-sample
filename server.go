@@ -24,6 +24,7 @@ func main() {
 	m.Get("/", controllers.ShowIndex)
 	m.Get("/thread/list", controllers.ShowThreads)
 	m.Post("/thread/create", controllers.CreateThread)
+	m.Get("/thread/:thread_id", controllers.ShowThread)
 
 	m.Run()
 }
