@@ -14,13 +14,14 @@ func InitDB(driver string, source string, dialect gorp.Dialect) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	dbmap := &gorp.DbMap{
+	dbMap := &gorp.DbMap{
 		Db:      db,
 		Dialect: dialect,
 	}
-	dbmap.AddTableWithName(Thread{}, "thread").SetKeys(true, "Id")
-	if err := dbmap.CreateTablesIfNotExists(); err != nil {
+	dbMap.AddTableWithName(Thread{}, "thread").SetKeys(true, "Id")
+	dbMap.AddTableWithName(Post{}, "post").SetKeys(true, "Id")
+	if err := dbMap.CreateTablesIfNotExists(); err != nil {
 		return nil, err
 	}
-	return &DB{dbmap}, nil
+	return &DB{dbMap}, nil
 }
