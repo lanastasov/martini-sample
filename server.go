@@ -9,17 +9,23 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+func DB() martini.Handler {
+	db, err := models.InitDB("sqlite3", "./data/martini-sample.db", gorp.SqliteDialect{})
+	if err != nil {
+		panic(err)
+	}
+	return func(c martini.Context) {
+		c.Map(db)
+		c.Next()
+	}
+}
+
 func main() {
 	m := martini.Classic()
 	m.Use(render.Renderer(render.Options{
 		Layout: "layout",
 	}))
-
-	db, err := models.InitDB("sqlite3", "./data/martini-sample.db", gorp.SqliteDialect{})
-	if err != nil {
-		panic(err)
-	}
-	m.Map(db)
+	m.Use(DB())
 
 	m.Get("/", controllers.ShowIndex)
 	m.Get("/thread/list", controllers.ShowThreads)
