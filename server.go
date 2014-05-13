@@ -21,6 +21,8 @@ func main() {
 	m.Map(db)
 
 	m.Get("/", controllers.ShowIndex)
+	m.Get("/thread/list", controllers.ShowThreads)
+	m.Post("/thread/create", controllers.CreateThread)
 
 	m.Run()
 }
