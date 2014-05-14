@@ -10,7 +10,7 @@ type DB struct {
 }
 
 func InitDB(driver string, source string, dialect gorp.Dialect) (*DB, error) {
-	db, err := sql.Open("sqlite3", "data/martini-sample.db")
+	db, err := sql.Open(driver, source)
 	if err != nil {
 		return nil, err
 	}
