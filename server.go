@@ -10,11 +10,12 @@ import (
 )
 
 func DB() martini.Handler {
-	db, err := models.InitDB("sqlite3", "./data/martini-sample.db", gorp.SqliteDialect{})
-	if err != nil {
-		panic(err)
-	}
 	return func(c martini.Context) {
+		db, err := models.InitDB("sqlite3", "./data/martini-sample.db", gorp.SqliteDialect{})
+		if err != nil {
+			panic(err)
+		}
+		defer db.Db.Close()
 		c.Map(db)
 		c.Next()
 	}
