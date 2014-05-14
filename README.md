@@ -1,4 +1,4 @@
 martini-sample
 ==============
 
-a sample application built with martini
+a sample application built with martini + gorp
