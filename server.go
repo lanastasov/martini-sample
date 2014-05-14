@@ -22,6 +22,13 @@ func DB() martini.Handler {
 }
 
 func main() {
+	db, err := models.InitDB("sqlite3", "./data/martini-sample.db", gorp.SqliteDialect{})
+	if err != nil {
+		panic(err)
+	}
+	db.InitSchema()
+	db.Db.Close()
+
 	m := martini.Classic()
 	m.Use(render.Renderer(render.Options{
 		Layout: "layout",

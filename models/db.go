@@ -20,8 +20,12 @@ func InitDB(driver string, source string, dialect gorp.Dialect) (*DB, error) {
 	}
 	dbMap.AddTableWithName(Thread{}, "thread").SetKeys(true, "Id")
 	dbMap.AddTableWithName(Post{}, "post").SetKeys(true, "Id")
-	if err := dbMap.CreateTablesIfNotExists(); err != nil {
-		return nil, err
-	}
 	return &DB{dbMap}, nil
+}
+
+func (db *DB) InitSchema() error {
+	if err := db.CreateTablesIfNotExists(); err != nil {
+		return err
+	}
+	return nil
 }
