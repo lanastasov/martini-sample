@@ -9,7 +9,7 @@ import (
 )
 
 func ShowThreads(r render.Render, db *models.DB) {
-	threads, err := db.GetAllThreads()
+	threads, err := models.GetAllThreads(db)
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +25,7 @@ func CreateThread(req *http.Request, r render.Render, db *models.DB) {
 	title := req.FormValue("title")
 
 	thread := models.NewThread(title)
-	if err := db.CreateThread(thread); err != nil {
+	if err := models.CreateThread(db, thread); err != nil {
 		panic(err)
 	}
 
@@ -38,12 +38,12 @@ func ShowThread(r render.Render, db *models.DB, params martini.Params) {
 		panic(err)
 	}
 
-	thread, err := db.GetThread(threadId)
+	thread, err := models.GetThread(db, threadId)
 	if err != nil {
 		panic(err)
 	}
 
-	posts, err := db.GetPostsByThreadId(threadId)
+	posts, err := thread.Posts(db)
 	if err != nil {
 		panic(err)
 	}

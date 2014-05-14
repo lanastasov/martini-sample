@@ -16,7 +16,7 @@ func CreatePost(req *http.Request, r render.Render, db *models.DB) {
 	body := req.FormValue("body")
 
 	post := models.NewPost(threadId, body)
-	if err := db.CreatePost(post); err != nil {
+	if err := models.CreatePost(db, post); err != nil {
 		panic(err)
 	}
 

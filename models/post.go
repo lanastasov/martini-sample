@@ -31,11 +31,11 @@ func (this *Post) PreUpdate(s gorp.SqlExecutor) error {
 	return nil
 }
 
-func (db *DB) CreatePost(post *Post) error {
+func CreatePost(db *DB, post *Post) error {
 	return db.Insert(post)
 }
 
-func (db *DB) GetPostsByThreadId(threadId int) ([]*Post, error) {
+func GetPostsByThreadId(db *DB, threadId int) ([]*Post, error) {
 	var posts []*Post
 	if _, err := db.Select(&posts, "SELECT * FROM post WHERE thread_id = ?", threadId); err != nil {
 		return nil, err

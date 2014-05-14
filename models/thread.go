@@ -5,17 +5,21 @@ type Thread struct {
 	Title string `db:"title"`
 }
 
+func (this *Thread) Posts(db *DB) ([]*Post, error) {
+	return GetPostsByThreadId(db, this.Id)
+}
+
 func NewThread(title string) *Thread {
 	return &Thread{
 		Title: title,
 	}
 }
 
-func (db *DB) CreateThread(thread *Thread) error {
+func CreateThread(db *DB, thread *Thread) error {
 	return db.Insert(thread)
 }
 
-func (db *DB) GetThread(threadId int) (*Thread, error) {
+func GetThread(db *DB, threadId int) (*Thread, error) {
 	thread, err := db.Get(Thread{}, threadId)
 	if err != nil || thread == nil {
 		return nil, err
@@ -23,7 +27,7 @@ func (db *DB) GetThread(threadId int) (*Thread, error) {
 	return thread.(*Thread), nil
 }
 
-func (db *DB) GetAllThreads() ([]*Thread, error) {
+func GetAllThreads(db *DB) ([]*Thread, error) {
 	var threads []*Thread
 	if _, err := db.Select(&threads, "SELECT * FROM thread"); err != nil {
 		return nil, err
