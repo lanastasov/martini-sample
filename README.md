@@ -1,7 +1,7 @@
 martini-sample
 ==============
 
-a sample application like BBS, built with [martini](https://github.com/go-martini/martini) + [gorp](https://github.com/coopernurse/gorp)
+a sample web application like BBS, built with [martini](https://github.com/go-martini/martini) + [gorp](https://github.com/coopernurse/gorp)
 
 ## Run
 
